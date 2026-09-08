@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Resources\UserResource;
 use App\Services\UserService;
 use App\Services\EventService;
 use App\Models\User;
@@ -63,12 +64,11 @@ class UserController extends Controller
                     'ratings'   => fn($r) => $r->where('role', 'Player')->whereIn('event_id', $eventIds),
                 ]),
                 'manager' => fn($q) => $q->with([
-                    'escalations' => fn($e) => $e->whereIn('event_id', $eventIds)->latest(),
-                    'economies'   => fn($e) => $e->whereIn('event_id', $eventIds)->latest(),
+                    'escalations' => fn($es) => $es->whereIn('event_id', $eventIds)->latest(),
+                    'economies'   => fn($ec) => $ec->whereIn('event_id', $eventIds)->latest(),
                 ]),
             ]);
-
-            return response()->json(['user' => \App\Resources\UserResource::make($user)], 200);
+            return response()->json(['user' => UserResource::make($user)], 200);
         } catch (\Exception $e) {
             Log::channel('register')->error("[Erro ao buscar info do usuário]", ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return response()->json(['message' => 'Houve um erro ao buscar as informações do usuário.'], 500);

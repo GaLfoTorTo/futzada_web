@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\EscalationController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\GameController;
 
@@ -27,6 +29,7 @@ Route::fallback(function () { return response()->json(['message' => 'Não foi po
 Route::post('/user/create', [UserController::class, 'create'])->name('create');
 //ROTA DE LOGIN
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/address', [AddressController::class, 'address'])->name('address');
 //ROTAS AUTENTICADAS (TOKEN JWT)
 Route::middleware(['auth:api'])->group(function () {
     //LOGOUT
@@ -57,6 +60,11 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('join',  [RoomController::class, 'join']);
             Route::post('exit',  [RoomController::class, 'exit']);
         });
+    });
+
+    // ESCALAÇÕES
+    Route::prefix('escalation')->group(function () {
+        Route::post('save', [EscalationController::class, 'save']);
     });
 
     // PARTIDAS

@@ -34,7 +34,7 @@ class EventController extends Controller
             //CAPTURAR ERRO E ENVIAR PARA O LOG
             Log::channel('register')->error("[Erro ao buscar Eventos do Usuário][Eventos]", ['[message]' => $e->getMessage(), '[error]' => $e->getTraceAsString()]);
             //REDIRECIONAR PARA O FORMULÁRIO COM A MENSAGEM DE ERRO
-            throw new \Exception("Ocorreu um erro ao criar o evento. Por favor, tente novamente.");
+            throw new \Exception("Ocorreu um erro ao buscar so eventos. Por favor, tente novamente.");
         }
     }
 
@@ -53,7 +53,7 @@ class EventController extends Controller
             //CAPTURAR ERRO E ENVIAR PARA O LOG
             Log::channel('register')->error("[Erro ao buscar Eventos][Eventos]", ['[message]' => $e->getMessage(), '[error]' => $e->getTraceAsString()]);
             //REDIRECIONAR PARA O FORMULÁRIO COM A MENSAGEM DE ERRO
-            throw new \Exception("Ocorreu um erro ao criar o evento. Por favor, tente novamente.");
+            throw new \Exception("Ocorreu um erro ao buscar so eventos. Por favor, tente novamente.");
         }
     }
 

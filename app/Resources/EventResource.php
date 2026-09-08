@@ -30,7 +30,7 @@ class EventResource extends JsonResource
             'collaborators' => $this->collaborators,
             'photo'         => $this->photo_url,
             'privacy'       => Privacy::fromBool((bool) $this->privacy)->value,
-            'address'       => $this->whenLoaded('address', fn() => AddressResource::make($this->address)),
+            'address'       => $this->whenLoaded('address', fn() => AddressResource::make($this->address->first())),
             'gameConfig'    => $this->whenLoaded('gameConfig', fn() => GameConfigResource::make($this->gameConfig)),
             'avaliations'   => $this->whenLoaded('avaliations', fn() => AvaliationResource::collection($this->avaliations)),
             'participants'  => $this->whenLoaded('users', function () {
@@ -41,6 +41,9 @@ class EventResource extends JsonResource
                     if ($player = $user->player) {
                         $player->setRelation('ratings',   $player->ratings->where('event_id', $eventId)->values())->latest();
                         $player->setRelation('positions', $player->positions->where('modality', $modality)->values());
+                    }
+                    if ($manager = $user->manager) {
+                        $manager->setRelation('economies',   $manager->economies->where('event_id', $eventId)->values())->latest();
                     }
                 });
 

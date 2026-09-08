@@ -11,7 +11,7 @@ class AddressResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'eventId'   => $this->event_id,
+            'eventId'   => $this->pivot->event_id,
             'street'    => $this->street,
             'number'    => $this->number,
             'suburb'    => $this->suburb,

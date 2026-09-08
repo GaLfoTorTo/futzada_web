@@ -51,7 +51,8 @@ class HomeService
         //BUSCAR EVENTOS NUM RAIO DE 5 KM DO USUARIO
         $list = Event::query()
             ->with('address')
-            ->join('address', 'address.event_id', '=', 'events.id')
+            ->join('event_address', 'event_address.event_id', '=', 'events.id')
+            ->join('address', 'address.id', '=', 'event_address.address_id')
             // FILTRO INICIAL DE LAT E LON (BOUNDING BOX)
             ->whereBetween('address.latitude', [
                 $minLat,

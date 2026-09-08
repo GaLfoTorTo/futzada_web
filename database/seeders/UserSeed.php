@@ -52,6 +52,90 @@ class UserSeed extends Seeder
             'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop&q=80',
             'https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=200&h=200&fit=crop&q=80',
             'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1554151228-14d9def656e4?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1590086782792-42dd2350140d?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1601412436009-d964bd02edbc?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1521119989659-a83eee488004?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1548142813-c348350df52b?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1546961342-ea5f62d5a27b?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1525735765456-7f67dc8eabbb?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1511485977113-f34c92461ad9?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1623582854588-d60de57fa33f?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?w=200&h=200&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=200&h=200&fit=crop&q=80',
+        ];
+
+        $formations = [
+            'Futebol' => [
+            '4-3-3',
+            '4-1-2-3',
+            '4-2-1-3',
+            '4-2-3-1',
+            '4-4-2',
+            '3-4-3',
+            '3-2-4-1',
+            '3-4-2-1',
+            '5-3-2',
+            '5-4-1',
+            ],
+            'Fut7' => [
+            '3-1-2',
+            '3-2-1',
+            '3-0-3',
+            '2-1-3',
+            '2-1-2-1',
+            '2-2-2',
+            '2-3-1',
+            '1-4-1',
+            '1-3-2',
+            '1-2-3',
+            ],
+            'Futsal' => [
+            '2-0-2',
+            '2-1-1',
+            '1-2-1',
+            '1-3',
+            '1-1-2',
+            ],
+            'Basquete' => [
+            '2-3',
+            '3-2',
+            '1-3-1',
+            '2-1-2',
+            '1-2-2',
+            '2-2-1',
+            ],
+            'Streetball' => [
+            '1-1',
+            '2-1',
+            '1-2',
+            ],
+            'Volei' => [
+            '3-3',
+            '2-2-2',
+            '1-4-1',
+            '2-3-1',
+            '3-2-1',
+            ],
+            'Volei de praia' => [
+            '1-1',
+            '2-1',
+            '1-2',
+            ],
+            'Fut Volei' => [
+            '1-1',
+            '2-1',
+            '1-2',
+            ],
         ];
 
         // Tarefas iniciais criadas para todo novo usuário ao cadastro
@@ -68,8 +152,9 @@ class UserSeed extends Seeder
             $events = $faker->numberBetween(1, 10);
             $isPlayer = $faker->boolean;
             $isManager = $faker->boolean;
+            $isParaticipant = $faker->boolean;
 
-            //CRIAR USUARIO
+            //GERAR USUARIO
             DB::table("users")->insert([
                 "uuid" => (string) Str::uuid(),
                 "first_name" => $faker->firstName,
@@ -84,29 +169,38 @@ class UserSeed extends Seeder
                 "created_at" => date("Y-m-d H:i:s"),
                 "updated_at" => date("Y-m-d H:i:s"),
             ]);
-            //CRIAR CONFIGURAÇÕES DE USUARIO
+            //GERAR CONFIGURAÇÕES DE USUARIO
             DB::table('user_configs')->insert([
                 "user_id" => $i,
                 "main_modality" => $faker->randomElement($modalityes),
                 "modalities" => getModalities()
             ]);
-            //CRIAR VINCULO DE LEVEL DO USUARIO
+            //GERAR VINCULO DE LEVEL DO USUARIO
             DB::table('user_levels')->insert([
                 "user_id" => $i,
                 "level_id" => 1,
                 "points" => 0,
             ]);
-            //CRIAR TASKS INICIAIS DO USUARIO
-            $userTaskRows = $initialTaskIds->map(fn ($taskId) => [
+            //GERAR TASKS DO USUARIO
+            DB::table('user_tasks')->insert($initialTaskIds->map(fn ($taskId) => [
                 'user_id'      => $i,
                 'task_id'      => $taskId,
                 'completed'    => false,
                 'completed_at' => null,
                 'created_at'   => date("Y-m-d H:i:s"),
                 'updated_at'   => date("Y-m-d H:i:s"),
-            ])->values()->all();
-            DB::table('user_tasks')->insert($userTaskRows);
+            ])->values()->all());
             
+            //GERAR ACHIVMENTS DO USUARIO
+            for ($a = 1; $a <= $faker->numberBetween(1, 10); $a++) { 
+                DB::table('user_achievements')->insert([
+                    'user_id' => $i,
+                    'achievement_id' => $a,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s"),
+                ]);
+            }
+
             //GERAR DADOS DE PLAYER DO USUARIO
             if($isPlayer){
                 //INCREMENTAR ID DO PLAYER
@@ -144,9 +238,9 @@ class UserSeed extends Seeder
                     }
                 }
             }
-            
+
             //GERAR DADOS DE MANAGER DO USUARIO
-            if($isManager){
+            if($isManager) {
                 //INCREMENTAR MANAGER
                 $m++;
                 //CRIAR MANAGER
@@ -167,86 +261,91 @@ class UserSeed extends Seeder
                     'updated_at' => date("Y-m-d H:i:s"),
                 ]);
             }
-
+            
+            //LOOP NOS EVENTOS
             for ($e = 1; $e <= $events ; $e++) {
-                //GERAR PARTICIPANT (EVENTS)
-                DB::table('participants')->insert([
-                    'event_id' => $e,
-                    'user_id' => $i,
-                    'roles' => json_encode($faker->randomElements($roles, $faker->numberBetween(1, count($roles)))),
-                    'status' => $faker->randomElement(['Avaliable','Doubt','None','Out']),
-                    'permissions' => null,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
-                ]);
+                //PULAR CASO NÃO SEJA PARTICIPANT
+                if($isParaticipant){
+                    $pRoles = $faker->randomElements($roles, $faker->numberBetween(1, count($roles)));
 
-                //GERAR RATING DE PLAYER (SE USUARIO FOR PLAYER)
-                if($isPlayer){
-                    DB::table('ratings')->insert([
+                    //GERAR PARTICIPANT (EVENTS)
+                    DB::table('participants')->insert([
+                        'event_id' => $e,
                         'user_id' => $i,
-                        'event_id' => $e,
-                        'role' => 'Player',
-                        'points' => $faker->randomFloat(2, 0, 99),
-                        'avarage' => $faker->randomFloat(2, 0, 99),
-                        'valuation' => $faker->randomFloat(2, 0, 99),
-                        'price' => $faker->randomFloat(2, 0, 99),
-                        'games' => $faker->numberBetween(0, 50),
+                        'roles' => json_encode($pRoles),
+                        'status' => $faker->randomElement(['Avaliable','Doubt','None','Out']),
+                        'permissions' => null,
                         'created_at' => date("Y-m-d H:i:s"),
                         'updated_at' => date("Y-m-d H:i:s"),
                     ]);
-                }
-                //GERAR RATING DE MANAGER (SE USUARIO FOR MANAGER)
-                if($isManager){
-                    DB::table('ratings')->insert([
-                        'user_id' => $i,
-                        'event_id' => $e,
-                        'role' => 'Manager',
-                        'points' => $faker->randomFloat(2, 0, 99),
-                        'avarage' => $faker->randomFloat(2, 0, 99),
-                        'valuation' => $faker->randomFloat(2, 0, 99),
-                        'price' => $faker->randomFloat(2, 0, 99),
-                        'games' => $faker->numberBetween(0, 50),
-                        'created_at' => date("Y-m-d H:i:s"),
-                        'updated_at' => date("Y-m-d H:i:s"),
-                    ]);
-                }
+                    
+                    //GERAR RATING DE JOGADOR NO EVENTO
+                    if($isPlayer && in_array('Player', $pRoles)){
+                        $player = DB::table('players')->where('id', $p)->first();
+                        if(!empty($player)){
+                            //GERAR RATING DE PLAYER (SE USUARIO FOR PLAYER)
+                            DB::table('ratings')->insert([
+                                'user_id' => $i,
+                                'event_id' => $e,
+                                'role' => 'Player',
+                                'points' => $faker->randomFloat(2, 0, 25),
+                                'avarage' => $faker->randomFloat(2, 0, 25),
+                                'valuation' => $faker->randomFloat(2, 0, 25),
+                                'price' => $faker->randomFloat(2, 0, 25),
+                                'games' => $faker->numberBetween(0, 50),
+                                'created_at' => date("Y-m-d H:i:s"),
+                                'updated_at' => date("Y-m-d H:i:s"),
+                            ]);
+                        }
+                    }
 
-                $manager = DB::table('managers')->where('id', $m)->first();
-                if($isManager && !empty($manager)) {
-                    //GERAR ECONOMY (MANAGER)
-                    DB::table('economies')->insert([
-                        'manager_id' => $manager->id,
-                        'event_id' => $e,
-                        'patrimony' => $faker->randomFloat(2, 0, 99),
-                        'price' => $faker->randomFloat(2, 0, 99),
-                        'price' => $faker->randomFloat(2, 0, 99),
-                        'valuation' => $faker->randomFloat(2, 0, 99),
-                        'points' => $faker->randomFloat(2, 0, 99),
-                        'total_points' => $faker->randomFloat(2, 0, 99),
-                        'created_at' => date("Y-m-d H:i:s"),
-                        'updated_at' => date("Y-m-d H:i:s"),
-                    ]);
-                    //GERAR ECONOMY (MANAGER)
-                    DB::table('escalations')->insert([
-                        'manager_id' => $manager->id,
-                        'event_id' => $e,
-                        'formation' => $faker->randomElement(["4-3-3", "4-4-2", "4-5-1", "3-5-2", "4-1-2-1"]),
-                        'starters' => json_encode([]),
-                        'reserves' => json_encode([]),
-                        'created_at' => date("Y-m-d H:i:s"),
-                        'updated_at' => date("Y-m-d H:i:s"),
-                    ]);
-                }
-            }
+                    //GERAR RATING DE MANAGER NO EVENTO
+                    if($isManager && in_array('Manager', $pRoles)){
+                        $manager = DB::table('managers')->where('id', $m)->first();
+                        if(!empty($manager)){
+                            $config = DB::table('game_configs')->where('event_id', $e)->first();
+                            
+                            //GERAR RATING DE MANAGER (SE USUARIO FOR MANAGER)
+                            DB::table('ratings')->insert([
+                                'user_id' => $i,
+                                'event_id' => $e,
+                                'role' => 'Manager',
+                                'points' => $faker->randomFloat(2, 0, 25),
+                                'avarage' => $faker->randomFloat(2, 0, 25),
+                                'valuation' => $faker->randomFloat(2, 0, 25),
+                                'price' => $faker->randomFloat(2, 0, 25),
+                                'games' => $faker->numberBetween(0, 50),
+                                'created_at' => date("Y-m-d H:i:s"),
+                                'updated_at' => date("Y-m-d H:i:s"),
+                            ]);
 
-            for ($a = 1; $a <= $faker->numberBetween(1, 10); $a++) { 
-                //GERAR ACHIVMENTS DO USUARIO
-                DB::table('user_achievements')->insert([
-                    'user_id' => $i,
-                    'achievement_id' => $a,
-                    'created_at' => date("Y-m-d H:i:s"),
-                    'updated_at' => date("Y-m-d H:i:s"),
-                ]);
+                            //GERAR ECONOMY (MANAGER)
+                            DB::table('economies')->insert([
+                                'manager_id' => $manager->id,
+                                'event_id' => $e,
+                                'patrimony' => $faker->randomFloat(2, 0, 25),
+                                'price' => $faker->randomFloat(2, 0, 25),
+                                'price' => $faker->randomFloat(2, 0, 25),
+                                'valuation' => $faker->randomFloat(2, 0, 25),
+                                'points' => $faker->randomFloat(2, 0, 25),
+                                'total_points' => $faker->randomFloat(2, 0, 25),
+                                'created_at' => date("Y-m-d H:i:s"),
+                                'updated_at' => date("Y-m-d H:i:s"),
+                            ]);
+
+                            //GERAR ECONOMY (MANAGER)
+                            DB::table('escalations')->insert([
+                                'manager_id' => $manager->id,
+                                'event_id' => $e,
+                                'formation' => $faker->randomElement($formations[$config->category]),
+                                'starters' => json_encode([]),
+                                'reserves' => json_encode([]),
+                                'created_at' => date("Y-m-d H:i:s"),
+                                'updated_at' => date("Y-m-d H:i:s"),
+                            ]);
+                        }
+                    }
+                }
             }
         }
     }

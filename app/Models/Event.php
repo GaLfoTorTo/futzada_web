@@ -72,7 +72,7 @@ class Event extends Model implements Auditable
 
     public function address()
     {
-        return $this->hasOne(Address::class);
+        return $this->belongsToMany(Address::class, 'event_address', 'event_id', 'address_id');
     }
 
     public function gameConfig()

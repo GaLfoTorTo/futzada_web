@@ -42,8 +42,12 @@ class EventService
         $events = $query->with([
                             'address', 'gameConfig', 'avaliations', 'rules', 'news', 'games',
                             'users' => fn($q) => $q->with([
-                                'player' => fn($p) => $p->with([
-                                    'ratings'   => fn($r) => $r->where('role', 'Player')->whereIn('event_id', $eventIds),
+                                'manager'  => fn($p) => $p->with([
+                                    'ratings'   => fn($r) => $r->where('role', 'Manager'),
+                                    'economies'   => fn($e) => $e->whereIn('event_id', $eventIds),
+                                ]),
+                                'player'  => fn($p) => $p->with([
+                                    'ratings'   => fn($r) => $r->where('role', 'Player'),
                                     'positions' => fn($p) => $p->whereIn('positions.modality', $modalities),
                                 ]),
                             ]),

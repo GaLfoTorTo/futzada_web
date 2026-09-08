@@ -14,7 +14,6 @@ class Address extends Model implements Auditable
 
     protected $table = 'address';
     protected $fillable = [
-        'event_id',
         'street',
         'number',
         'suburb',
@@ -28,7 +27,6 @@ class Address extends Model implements Auditable
         'photos',
     ];
     protected $auditInclude = [
-        'event_id',
         'street',
         'number',
         'suburb',
@@ -53,8 +51,8 @@ class Address extends Model implements Auditable
 
     // ─── Relationships ────────────────────────────────────────────────────────
 
-    public function event()
+    public function events()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsToMany(Event::class, 'event_address', 'address_id', 'event_id');
     }
 }

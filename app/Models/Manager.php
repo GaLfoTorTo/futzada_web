@@ -9,6 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\User;
 use App\Models\Escalacao;
 use App\Models\Economy;
+use App\Models\Rating;
 
 class Manager extends Model implements Auditable
 {
@@ -56,5 +57,10 @@ class Manager extends Model implements Auditable
     public function economies()
     {
         return $this->hasMany(Economy::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'user_id', 'user_id');
     }
 }
