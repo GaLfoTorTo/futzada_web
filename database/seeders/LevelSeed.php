@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory;
 
 class LevelSeed extends Seeder
 {
@@ -14,7 +13,6 @@ class LevelSeed extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create();
         // Uma imagem por tier, do mais iniciante ao mais alto
         $tierImages = [
             'Iniciante'  => 'https://images.unsplash.com/photo-1526676037777-05a232554f77?w=200&h=200&fit=crop&q=80',

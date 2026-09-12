@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('number')->nullable();
             $table->integer('duration')->nullable();
+            $table->date('date')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->enum('status', ['scheduled', 'in_progress', 'finished', 'cancelled'])->nullable();

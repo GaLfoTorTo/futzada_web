@@ -85,7 +85,7 @@ class UserController extends Controller
         try {
             $eventService = new EventService();
             $user = auth()->user();
-            $events = $eventService->get($user->id);
+            $events = $eventService->get(userId: $user->id);
             return response()->json(['events' => $events], 200);
         } catch (\Exception $e) {
             Log::channel('register')->error("[Erro ao buscar eventos do usuário]", ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);

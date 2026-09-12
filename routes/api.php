@@ -29,8 +29,7 @@ Route::fallback(function () { return response()->json(['message' => 'Não foi po
 Route::post('/user/create', [UserController::class, 'create'])->name('create');
 //ROTA DE LOGIN
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/address', [AddressController::class, 'address'])->name('address');
-//ROTAS AUTENTICADAS (TOKEN JWT)
+//ROTAS AUTENTICADAS
 Route::middleware(['auth:api'])->group(function () {
     //LOGOUT
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -50,15 +49,26 @@ Route::middleware(['auth:api'])->group(function () {
 
     // EVENTO
     Route::prefix('events')->group(function () {
-        //PARTICIPANTES
-        Route::prefix('/participants')->group(function () {
-            Route::get('/{id}',[EventController::class, 'participants']);
-        });
-        // SALA (STREAM)
-        Route::prefix('/room')->group(function () {
-            Route::post('stream',[RoomController::class, 'stream']);
-            Route::post('join',  [RoomController::class, 'join']);
-            Route::post('exit',  [RoomController::class, 'exit']);
+        Route::get('/',[EventController::class, 'events']);
+        //EVENTO ESPECIFICOS (UUID)
+        Route::prefix('{uuid}')->group(function () {
+            Route::get('/',[EventController::class, 'event']);
+            //PARTICIPANTES
+            Route::get('/participants',[EventController::class, 'participants']);
+            //REGRAS
+            Route::get('/rules',[EventController::class, 'rules']);
+            //RANKINGS
+            Route::get('/rank',[EventController::class, 'rank']);
+            //NOTICIAS
+            Route::get('/news',[EventController::class, 'news']);
+            //PARTIDAS
+            Route::get('/games',[EventController::class, 'games']);
+            //SALA AO VIVO (STREAM)
+            Route::prefix('/room')->group(function () {
+                Route::post('stream',[RoomController::class, 'stream']);
+                Route::post('join',  [RoomController::class, 'join']);
+                Route::post('exit',  [RoomController::class, 'exit']);
+            });
         });
     });
 
@@ -68,9 +78,11 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     // PARTIDAS
-    Route::prefix('games/{game}')->group(function () {
-        Route::post('start', [GameController::class, 'start']);
-        Route::post('pause', [GameController::class, 'pause']);
-        Route::post('finish',[GameController::class, 'finish']);
+    Route::prefix('games')->group(function () {
+        Route::prefix('{uuid}')->group(function () {
+            Route::post('start', [GameController::class, 'start']);
+            Route::post('pause', [GameController::class, 'pause']);
+            Route::post('finish',[GameController::class, 'finish']);
+        });
     });
 });

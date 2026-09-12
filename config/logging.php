@@ -138,6 +138,12 @@ return [
             'path' => storage_path('logs/register.log'),
             'level' => env('LOG_LEVEL', 'error'),
         ],
+        //LOGS PERSONALIZADOS: CRIAÇÃO, EDIÇÃO REMOÇÃO DE REGISTROS
+        'events' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/events.log'),
+            'level' => env('LOG_LEVEL', 'error'),
+        ],
         //LOGS PERSONALIZADOS: UPLOAD DE ARQUIVOS
         'files' => [
             'driver' => 'single',

@@ -21,6 +21,7 @@ class Game extends Model implements Auditable
     protected $fillable = [
         'number',
         'duration',
+        'date',
         'start_time',
         'end_time',
         'status',
@@ -31,6 +32,7 @@ class Game extends Model implements Auditable
     protected $auditInclude = [
         'number',
         'duration',
+        'date',
         'start_time',
         'end_time',
         'status',
@@ -41,8 +43,7 @@ class Game extends Model implements Auditable
     protected $casts = [
         'number'     => 'integer',
         'duration'   => 'integer',
-        'start_time' => 'time',
-        'end_time'   => 'time',
+        'date' => 'date',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',

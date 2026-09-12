@@ -28,13 +28,16 @@ class EventService
     }
     
     /**
-    * EVENTOS - BUSCAR EVENTOS DO USUÁRIO
-    * @param int $id: ID do usuário
+    * EVENTOS - BUSCAR EVENTOS
+    * @param string|null $uuid: UUID do evento
+    * @param int|null $userId: ID do usuário
     * @return EventResource[]: Collection de eventos formatados;
     */
-    public function get(?int $id=null)
+    public function get(?string $uuid = null, ?int $userId = null)
     {
-        $query = Event::query()->when($id, fn($q) => $q->whereHas('users', fn($q) => $q->where('users.id', $id)));
+        $query = Event::query()
+            ->when($uuid,   fn($q) => $q->where('uuid', $uuid))
+            ->when($userId, fn($q) => $q->whereHas('users', fn($q) => $q->where('users.id', $userId)));
 
         $eventIds   = (clone $query)->pluck('id');
         $modalities = (clone $query)->pluck('modality')->unique();
